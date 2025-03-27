@@ -10,7 +10,7 @@ async def root():
     return {"massage": "Hello Word"} 
 
 
-@app.get("/teste1")
+@app.get("/teste")
 async def funcaoteste():
     return {"teste": True, "num-aleator": random.randint(0, 1000)}
 
