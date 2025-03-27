@@ -9,8 +9,8 @@ app = FastAPI()
 async def root():
     return {"massage": "Hello Word"} 
 
-
-@app.get("/teste1")
+#teste para ver se está ok. obrigado
+@app.get("/teste31")
 async def funcaoteste():
     return {"teste": True, "num-aleator": random.randint(0, 1000)}
 
