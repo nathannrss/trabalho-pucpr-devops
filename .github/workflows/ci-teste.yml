@@ -41,21 +41,21 @@ jobs:
         uses: discord-actions/message@v2
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          message: "CI/CD finalizado. Verifique os resultados abaixo:"
+          message: "Integração contínua (CI) concluída. Verifique os resultados dos jobs abaixo:"
           embeds: >
             [
               {
-                "title": "CI/CD Executado",
+                "title": "CI Executado",
                 "description": "Resultados dos jobs:",
                 "color": 3066993,
                 "fields": [
                   {
                     "name": "Build",
-                    "value": "${{ needs.build.result }}"
+                    "value": "${{ job.status == 'success' && ' Sucesso' || ' Falhou' }}"
                   },
                   {
                     "name": "Docker",
-                    "value": "${{ needs.docker.result }}"
+                    "value": "${{ job.status == 'success' && ' Sucesso' || ' Falhou' }}"
                   }
                 ]
               }
