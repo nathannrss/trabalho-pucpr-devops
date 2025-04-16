@@ -1,0 +1,21 @@
+name: Notificação no Discord
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notificar status do workflow
+        uses: nobrayner/discord-workflow-status-notifier@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          discord-webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: 'Status do Workflow: {{STATUS}}'
+          include-details: true
