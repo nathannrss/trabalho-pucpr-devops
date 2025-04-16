@@ -24,11 +24,3 @@ async def funcaoteste():
 
 def test_erro_simulado():
     assert False, "Erro simulado para testar falha no pipeline"
-
-    - name: Forçar erro
-  run: exit 1
-
-
-
-def erro_de_sintaxe(
-    print("erro")  # falta fechar parêntese da função
