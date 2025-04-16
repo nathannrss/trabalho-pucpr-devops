@@ -47,7 +47,7 @@ jobs:
      - name: Notify Discord
        uses: discord-actions/message@v2
        with:
-         webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
+         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
          message: " CI/CD finalizado teste"
 
         
