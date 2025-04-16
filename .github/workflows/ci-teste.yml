@@ -41,6 +41,7 @@ jobs:
         uses: discord-actions/message@v2
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          message: "CI/CD finalizado. Verifique os resultados abaixo:"
           embeds: >
             [
               {
