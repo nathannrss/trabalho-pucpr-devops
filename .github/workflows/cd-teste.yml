@@ -2,7 +2,7 @@ name: Continuous Delivery
 on:
   push:
     branches:
-      - main  # Ou qualquer outra branch que você escolher
+      - main
 
 jobs:
   delivery:
@@ -48,18 +48,35 @@ jobs:
           push: false
           tags: user/app:latest
 
-  discord:
-    needs: [delivery, deploy, docker]  
+  discord-success:
+    needs: [delivery, deploy, docker]
     runs-on: ubuntu-latest
-    if: success()  
+    if: success()
     steps:
-      - name: Notificar no Discord
+      - name: Notificar sucesso no Discord
         uses: appleboy/discord-action@master
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
           username: GitHub Actions
           message: |
             CD executado com sucesso.
+            Repositório: ${{ github.repository }}
+            Branch: ${{ github.ref_name }}
+            Autor: ${{ github.actor }}
+            Commit: ${{ github.event.head_commit.message }}
+
+  discord-failure:
+    needs: [delivery, deploy, docker]
+    runs-on: ubuntu-latest
+    if: failure()
+    steps:
+      - name: Notificar falha no Discord
+        uses: appleboy/discord-action@master
+        with:
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
+          username: GitHub Actions
+          message: |
+            CD falhou.
             Repositório: ${{ github.repository }}
             Branch: ${{ github.ref_name }}
             Autor: ${{ github.actor }}
