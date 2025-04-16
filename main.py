@@ -24,3 +24,4 @@ async def funcaoteste():
 
 def test_erro_simulado():
     assert False, "Erro simulado para testar falha no pipeline"
+
