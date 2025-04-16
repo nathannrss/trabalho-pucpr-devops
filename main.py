@@ -14,4 +14,4 @@ async def root():
 async def funcaoteste():
     return {"teste": True, "num-aleator": random.randint(0, 1000)}
 
-teste erro
+teste erro arquivo
