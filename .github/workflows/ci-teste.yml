@@ -39,9 +39,12 @@ jobs:
             push: false
             tags: user/app:latest
 
+  discord:
+      runs-on: ubuntu-latest
+      steps:
         - name: Discord notification
           uses: cl8dep/action-discord@v0
           with:
-           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-           message: 'Hello World'
+            webhook: ${{ secrets.DISCORD_WEBHOOK }}
+            message: 'Hello World'
         
