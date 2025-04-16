@@ -1,8 +1,8 @@
 name: Continuous Integration
-on: 
+on:
   pull_request:
     branches:
-      - main  # Ou qualquer outra branch
+      - main
 
 jobs:
   build:
@@ -21,43 +21,33 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      - name: Build 
+
+      - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
           push: false
           tags: user/app:latest
 
-  # Notificação de CI
-  discord_ci:
-    runs-on: ubuntu-latest
+  discord:
     needs: [build, docker]
-    if: always() 
+    runs-on: ubuntu-latest
+    if: success()
     steps:
-      - name: Notify Discord (CI)
-        uses: discord-actions/message@v2
+      - name: Notificar no Discord
+        uses: appleboy/discord-action@master
         with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          message: "Integração contínua (CI) concluída. Verifique os resultados dos jobs abaixo:"
-          embeds: >
-            [
-              {
-                "title": "🔧 CI Executado",
-                "description": "Resultados da Integração Contínua:",
-                "color": 3066993,
-                "fields": [
-                  {
-                    "name": "🔧 Build",
-                    "value": "${{ needs.build.result }}"
-                  },
-                  {
-                    "name": "🐳 Docker",
-                    "value": "${{ needs.docker.result }}"
-                  }
-                ]
-              }
-            ]
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
+          username: GitHub Actions
+          message: |
+            CI executado com sucesso.
+            Repositório: ${{ github.repository }}
+            Branch: ${{ github.ref_name }}
+            Autor: ${{ github.actor }}
+            Commit: ${{ github.event.head_commit.message }}
