@@ -40,11 +40,15 @@ jobs:
             tags: user/app:latest
 
   discord:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Discord notification
-          uses: cl8dep/action-discord@v0
-          with:
-            webhook: ${{ secrets.DISCORD_WEBHOOK }}
-            message: 'Hello World'
+    needs: [build, docker]
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+      - name: Notify Discord
+        uses: discord-actions/message@v2
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          message: " CI/CD pipeline executado com sucesso no PR!"
+          username: "GitHub Actions"
+          avatar: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
         
