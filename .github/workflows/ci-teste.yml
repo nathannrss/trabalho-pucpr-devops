@@ -44,10 +44,27 @@ jobs:
    runs-on: ubuntu-latest
    if: always()
    steps:
-     - name: Notify Discord
-       uses: discord-actions/message@v2
-       with:
-         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-         message: " CI/CD finalizado teste"
-
+    - name: Notify Discord (com embed)
+     uses: discord-actions/message@v2
+     with:
+       webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
+       embeds: >
+         [
+           {
+             "title": "🚀 CI/CD Executado",
+             "description": "Resultados dos jobs:",
+             "color": 3066993,
+             "fields": [
+               {
+                 "name": "🔧 Build",
+                "value": "${{ needs.build.result }}"
+               },
+               {
+                 "name": "🐳 Docker",
+                 "value": "${{ needs.docker.result }}"
+               }
+             ]
+           }
+         ]
+  
         
