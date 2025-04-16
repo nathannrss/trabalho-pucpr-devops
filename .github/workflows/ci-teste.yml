@@ -2,7 +2,7 @@ name: Continuous Integration
 on: 
   pull_request:
     branches:
-      - main
+      - main  # Ou qualquer outra branch
 
 jobs:
   build:
@@ -32,12 +32,13 @@ jobs:
           push: false
           tags: user/app:latest
 
-  discord:
-    needs: [build, docker]
+  # Notificação de CI
+  discord_ci:
     runs-on: ubuntu-latest
-    if: always()
+    needs: [build, docker]
+    if: always() 
     steps:
-      - name: Notify Discord (com embed)
+      - name: Notify Discord (CI)
         uses: discord-actions/message@v2
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
@@ -45,17 +46,17 @@ jobs:
           embeds: >
             [
               {
-                "title": "CI Executado",
-                "description": "Resultados dos jobs:",
+                "title": "🔧 CI Executado",
+                "description": "Resultados da Integração Contínua:",
                 "color": 3066993,
                 "fields": [
                   {
-                    "name": "Build",
-                    "value": "${{ needs.build.result == 'success' && '✅ Sucesso' || '❌ Falhou' }}"
+                    "name": "🔧 Build",
+                    "value": "${{ needs.build.result }}"
                   },
                   {
-                    "name": "Docker",
-                    "value": "${{ needs.docker.result == 'success' && '✅ Sucesso' || '❌ Falhou' }}"
+                    "name": "🐳 Docker",
+                    "value": "${{ needs.docker.result }}"
                   }
                 ]
               }
