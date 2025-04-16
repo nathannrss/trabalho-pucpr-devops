@@ -49,7 +49,7 @@ jobs:
   discord_delivery:
     runs-on: ubuntu-latest
     needs: delivery
-    if: always()  # Sempre será executado, independentemente do sucesso/falha do job anterior
+    if: always()  
     steps:
       - name: Notify Discord (Delivery)
         uses: discord-actions/message@v2
@@ -75,7 +75,7 @@ jobs:
   discord_deploy:
     runs-on: ubuntu-latest
     needs: deploy
-    if: always() 
+    if: always()  
     steps:
       - name: Notify Discord (Deploy)
         uses: discord-actions/message@v2
