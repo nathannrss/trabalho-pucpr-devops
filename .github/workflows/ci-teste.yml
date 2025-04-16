@@ -51,11 +51,11 @@ jobs:
                 "fields": [
                   {
                     "name": "Build",
-                    "value": "${{ job.status == 'success' && ' Sucesso' || ' Falhou' }}"
+                    "value": "${{ needs.build.result == 'success' && '✅ Sucesso' || '❌ Falhou' }}"
                   },
                   {
                     "name": "Docker",
-                    "value": "${{ job.status == 'success' && ' Sucesso' || ' Falhou' }}"
+                    "value": "${{ needs.docker.result == 'success' && '✅ Sucesso' || '❌ Falhou' }}"
                   }
                 ]
               }
