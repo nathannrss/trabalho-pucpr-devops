@@ -42,12 +42,12 @@ jobs:
   discord:
     needs: [build, docker]
     runs-on: ubuntu-latest
-    if: success()
+    if: always()
     steps:
       - name: Notify Discord
         uses: discord-actions/message@v2
         with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
           message: " CI/CD pipeline executado com sucesso no PR!"
           username: "GitHub Actions"
           avatar: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
